@@ -1,12 +1,36 @@
 const client = require("./index");
 
-async function createUser() {}
+async function createUser({username, password}) {
+    try {
+        
+    } catch (error) {
+        console.error(error)
+    }
+}
 
-async function getUser() {}
+async function getUser({username, password}) {
+    try {
+        
+    } catch (error) {
+        console.error(error)
+    }
+}
 
-async function getUserById() {}
+async function getUserById(userId) {
+    try {
+        
+    } catch (error) {
+        console.error(error)
+    }
+}
 
-async function getUserByUserName() {}
+async function getUserByUserName(userName) {
+    try {
+
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 module.exports = {
   createUser,
