@@ -1,2 +1,4 @@
-export {default as Main} from './Main'
-export {default as NavBar} from './NavBar'
+const express = require('express');
+const apiRouter = express.Router();
+
+module.exports = apiRouter;
