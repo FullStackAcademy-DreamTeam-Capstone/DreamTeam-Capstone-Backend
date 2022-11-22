@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-dev": "NODE_ENV='development' react-scripts start",
-    "start": "react-scripts start",
-    "seed:dev": "nodemon seed.js"
+    "start:dev": "nodemon index.js",
+    "start": "node index.js",
+    "seed:dev": "nodemon ./db/seed.js",
+    "seed": "node ./db/seed.js"
   },
   "keywords": [],
   "author": "",

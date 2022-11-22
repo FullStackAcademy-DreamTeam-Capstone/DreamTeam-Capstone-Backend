@@ -1,13 +1,12 @@
-const {createUser} = require('.')
+// const {createUser} = require('./users')
 const client = require('./client')
 
 async function dropTables(){
   try {
     console.log("Dropping all tables...")
     await client.query(`
-    DROP TABLE IF EXISTS products; 
     DROP TABLE IF EXISTS users;
-    `)
+    `);
     
     console.log("Finished dropping all tables...")  
   } catch (error) {
@@ -26,7 +25,7 @@ async function createTables(){
       username varchar(255) UNIQUE NOT NULL,
       password varchar(255) NOT NULL,
       name VARCHAR(255) UNIQUE NOT NULL, 
-      location VARCHAR(255) NOT NULL,
+      location VARCHAR(255) NOT NULL
     );
     `)
     console.log("Finished creating tables...")
@@ -40,10 +39,10 @@ async function createTables(){
 
 async function rebuildDB() {
     try {
+      client.connect()
       await dropTables()
       await createTables()
-    //   await createInitialUsers()
-    //   await createInitialActivities()
+  
     } catch (error) {
       console.log("Error during rebuildDB")
       throw error
@@ -51,7 +50,7 @@ async function rebuildDB() {
   }
 
   async function testDB() {
-    
+    console.log("hello World")
   }
   
   rebuildDB()

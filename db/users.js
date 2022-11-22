@@ -1,4 +1,4 @@
-const client = require("./index");
+const client = require("./client");
 
 async function createUser({username, password, name, location}) {
     try {
