@@ -2,9 +2,19 @@ const {} = require('./')
 const client = require('./client')
 
 async function dropTables(){
+  try {
     console.log("Dropping all tables...")
-    ///code goes here
-    console.log("Finished dropping all tables...")
+    await client.query(`
+    DROP TABLE IF EXISTS products; 
+    DROP TABLE IF EXISTS users;
+    `)
+    
+    console.log("Finished dropping all tables...")  
+  } catch (error) {
+      console.error("Error dropping tables!")
+      throw error;
+  }  
+  
 }
 
 async function createTables(){
