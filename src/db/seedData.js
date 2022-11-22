@@ -1,4 +1,4 @@
-const {} = require('./')
+const {createUser} = require('./')
 const client = require('./client')
 
 async function dropTables(){
@@ -18,9 +18,24 @@ async function dropTables(){
 }
 
 async function createTables(){
+  try {
     console.log("Creating tables...")
-    ///code goes here
+    await client.query(`
+    CREATE TABLE users (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) UNIQUE NOT NULL, 
+      description TEXT NOT NULL
+    );
+    CREATE TABLE products (
+      
+    )
+    `)
     console.log("Finished creating tables...")
+  } catch (error) {
+      console.error("Error building tables!")
+      throw error;
+  }
+    
 }
 
 
