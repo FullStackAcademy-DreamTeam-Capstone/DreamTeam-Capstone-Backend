@@ -6,7 +6,7 @@
   "scripts": {
     "start-dev": "NODE_ENV='development' react-scripts start",
     "start": "react-scripts start",
-    "seed:dev": "nodemon index.js"
+    "seed:dev": "nodemon seed.js"
   },
   "keywords": [],
   "author": "",

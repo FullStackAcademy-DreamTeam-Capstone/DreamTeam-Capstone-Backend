@@ -9,8 +9,8 @@ const cors = require("cors");
 server.use(cors());
 
 server.use(express.json());
-const { client } = require("./db");
-client.connect();
+const { client } = require("./db/client");
+
 
 const apiRouter = require("./api");
 server.use("/api", apiRouter);
