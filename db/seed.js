@@ -1,13 +1,27 @@
 // const {createUser} = require('./users')
 const client = require("./client");
+const {
+  createUser
+} = require('./users')
+
+// testing createUser 
+async function testCreateUser() {
+  try {
+    console.log("user is being created") 
+    const andrew = await createUser({username: "andrewIsCool", password: "iLoveDogs", name: "andrew", location: "Georgia"});
+    console.log("finished creating the user")
+  } catch (error) {
+    console.error('Error creating a user')
+  }
+}
 
 async function dropTables() {
   try {
     console.log("Dropping all tables...");
     await client.query(`
-    DROP TABLE IF EXISTS users;
-    DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS cart;
+    DROP TABLE IF EXISTS products;
+    DROP TABLE IF EXISTS users;
     `); 
 
     console.log("Finished dropping all tables...");
@@ -57,6 +71,8 @@ async function rebuildDB() {
     client.connect();
     await dropTables();
     await createTables();
+    await testCreateUser();
+
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
@@ -64,7 +80,14 @@ async function rebuildDB() {
 }
 
 async function testDB() {
-  console.log("hello World");
+  console.log("starting to test database");
+
+  console.log("testing createUser")
+  const result = await createUser();
+  console.log("result:", result)
+
+
+  console.log("finished testing database")
 }
 
 rebuildDB()
