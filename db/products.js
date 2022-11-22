@@ -57,5 +57,7 @@ async function updateProduct({ id, ...fields }) {
 module.exports = {
     getAllProduct,
     getProductById,
-    getProductByName
+    getProductByName,
+    createProduct,
+    updateProduct
 }
