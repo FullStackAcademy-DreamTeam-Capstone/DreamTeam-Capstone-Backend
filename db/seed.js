@@ -1,7 +1,8 @@
 // const {createUser} = require('./users')
 const client = require("./client");
 const {
-  createUser
+  createUser,
+  getAllUsers
 } = require('./users')
 
 // testing createUser 

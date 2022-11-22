@@ -1,5 +1,14 @@
 const client = require("./client");
 
+async function getAllUsers(){
+  const {rows} = await client.query(`
+    SELECT id, username, name, location
+    FROM users; 
+  `)
+
+  return rows
+}
+
 async function createUser({ username, password, name, location }) {
   try {
     const {
@@ -82,6 +91,7 @@ async function getUserByUserName(userName) {
 }
 
 module.exports = {
+  getAllUsers,
   createUser,
   updateUser,
   getUser,
