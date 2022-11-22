@@ -23,12 +23,14 @@ async function createTables(){
     await client.query(`
     CREATE TABLE users (
       id SERIAL PRIMARY KEY,
+      username varchar(255) UNIQUE NOT NULL,
+      password varchar(255) NOT NULL,
       name VARCHAR(255) UNIQUE NOT NULL, 
-      description TEXT NOT NULL
+      location VARCHAR(255) NOT NULL,
     );
     CREATE TABLE products (
       
-    )
+    );
     `)
     console.log("Finished creating tables...")
   } catch (error) {
