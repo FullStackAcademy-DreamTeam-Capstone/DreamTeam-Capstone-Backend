@@ -16,14 +16,14 @@ router.post("/login", async (req, res, next) => {
   }
   try {
     const user = await getUser({ username, password });
-    console.log("hello", user)
-    if (user && user.password == password) {
+    
+    if (user) {
       
       const token = jwt.sign({ id: user.id, username }, JWT_SECRET, {
         expiresIn: "1w",
       });
       
-      res.send({ user, token, message: "you're logged in!", token: token });
+      res.send({ user, token:token, message: "you're logged in!" });
     } else {
       next({
         name: "Incorrect Credentials Error",
@@ -38,7 +38,7 @@ router.post("/login", async (req, res, next) => {
 
 //REGISTER
 router.post("/register", async (req, res, next) => {
-  const { username, password } = req.body;
+  const { username, password, name, location } = req.body;
 
   try {
     const _user = await getUserByUserName(username);
@@ -56,6 +56,8 @@ router.post("/register", async (req, res, next) => {
       const user = await createUser({
         username,
         password,
+        name, 
+        location
       });
 
       const token = jwt.sign(
