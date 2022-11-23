@@ -29,7 +29,26 @@ async function createUser({ username, password, name, location }) {
   }
 }
 
-async function updateUser() {}
+async function updateUser(id, fields = {}) {
+  const setString = Object.keys(fields).map((key,index) => `"${key}" = $${index + 1}`).join(',')
+  if (setString.legnth === 0){
+    return
+  } 
+
+  try {
+    const {rows: [user]} = await client.query(`
+      UPDATE users
+      SET ${setString}
+      WHERE id = ${id}
+      RETURNING * ;
+    `,Object.values(fields))
+
+    return user
+
+  } catch (error) {
+    throw(error)
+  }
+}
 
 async function getUser({ username, password }) {
   if (!username || !password) {
@@ -83,7 +102,7 @@ async function getUserByUserName(userName) {
       `,
       [userName]
     );
-
+console.log(user, "USER")
     return user;
   } catch (error) {
     console.error(error);
