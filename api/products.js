@@ -1,7 +1,12 @@
 const express = require("express");
 const productRouter = express.Router();
 const { requireUser } = require("./utils");
-const { getAllProduct, createProduct, updateProduct } = require("./products");
+const {
+  getAllProduct,
+  createProduct,
+  updateProduct,
+  getProductById,
+} = require("./products");
 
 // CREATE POST
 productRouter.post("/", requireUser, async (req, res, next) => {
@@ -26,11 +31,48 @@ productRouter.post("/", requireUser, async (req, res, next) => {
 });
 
 // GET ALL POSTS
-productRouter.get('/', async (req, res, next) => {
-try {
+productRouter.get("/", async (req, res, next) => {
+  try {
     const allProducts = await getAllProduct();
+    const products = allProducts.filter((post) => {
+      if (post.active) {
+        return true;
+      }
+    });
+    res.send({
+      products,
+    });
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
 
-} catch ({name, message}) {
-    next({name, message})
-}   
-})
+// UPDATING A PRODUCT
+productRouter.patch("/:productId", requireUser, async (req, res, next) => {
+  const { productId } = req.params;
+  const { name, price } = req.body;
+  const updateProduct = {};
+
+  if (name) {
+    updatedProduct.name = name;
+  }
+  if (price) {
+    updatedProduct.price = price;
+  }
+
+  try {
+    const product = await getProductById(productId);
+
+    if (product.author.id === req.user.id) {
+      const updatedProduct = await updateProduct(productId, updateProduct);
+      res.send({ post: updatedProduct });
+    } else {
+      next({
+        name: "UnauthorizedUser",
+        message: "Cannot update a product that is not yours",
+      });
+    }
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
