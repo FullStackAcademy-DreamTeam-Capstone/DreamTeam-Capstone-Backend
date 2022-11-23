@@ -20,6 +20,7 @@ async function dropTables() {
   try {
     console.log("Dropping all tables...");
     await client.query(`
+    DROP TABLE IF EXISTS cart_item;
     DROP TABLE IF EXISTS cart;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS users;
@@ -49,14 +50,26 @@ async function createTables() {
     CREATE TABLE products (
       id SERIAL PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
-      price VARCHAR(255) NOT NULL
+      price VARCHAR(255) NOT NULL,
+      img_url TEXT
     );
     `);
 
     await client.query(`
     CREATE TABLE cart (
       id SERIAL PRIMARY KEY,
-      user_id VARCHAR(255) NOT NULL
+      user_id VARCHAR(255) NOT NULL,
+      isActive BOOLEAN 
+    );
+    `);
+
+    await client.query(`
+    CREATE TABLE cart_item (
+      id SERIAL PRIMARY KEY,
+      "productId" INTEGER REFERENCES products(id),
+      "cartId" INTEGER REFERENCES cart(id),
+      price INTEGER,
+      quantity INTEGER
     );
     `);
 
@@ -72,7 +85,7 @@ async function rebuildDB() {
     client.connect();
     await dropTables();
     await createTables();
-    await testCreateUser();
+
 
   } catch (error) {
     console.log("Error during rebuildDB");
@@ -84,7 +97,7 @@ async function testDB() {
   console.log("starting to test database");
 
   console.log("testing createUser")
-  const result = await createUser();
+  const result = await createUser({username: "andrewIsCool", password: "iLoveDogs", name: "andrew", location: "Georgia"});
   console.log("result:", result)
 
 
