@@ -1,9 +1,6 @@
 // const {createUser} = require('./users')
 const client = require("./client");
-const {
-  createUser,
-  getAllUsers
-} = require('./users')
+const { createUser, getAllUsers, getUserById, updateUser, getUser, getUserByUserName } = require("./users");
 
 // testing createUser 
 async function testCreateUser() {
@@ -96,12 +93,36 @@ async function rebuildDB() {
 async function testDB() {
   console.log("starting to test database");
 
-  console.log("testing createUser")
-  const result = await createUser({username: "andrewIsCool", password: "iLoveDogs", name: "andrew", location: "Georgia"});
-  console.log("result:", result)
+  console.log("testing createUser");
+  const result = await createUser({
+    username: "andrewIsCool",
+    password: "iLoveDogs",
+    name: "andrew",
+    location: "Georgia",
+  });
 
+  console.log("result:", result);
 
-  console.log("finished testing database")
+  console.log("testing getAllUsers")
+  const users = await getAllUsers();
+
+  console.log("Result:", users);
+
+  console.log("testing getUserById")
+  const andrew = await getUserById(1)
+
+  console.log("Result:", andrew);
+
+  console.log("testing updateUser")
+  const update = await updateUser(users[0].id, {
+    username: "timothyIsCool",
+    name: "timothy",
+    location: "Ohio"
+  });
+  
+  console.log("Result:", update);
+
+  console.log("finished testing database");
 }
 
 rebuildDB()
