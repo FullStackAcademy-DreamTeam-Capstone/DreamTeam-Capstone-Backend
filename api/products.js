@@ -8,7 +8,7 @@ const {
   getProductById,
 } = require("./products");
 
-// CREATE POST
+// CREATE PRODUCT
 productRouter.post("/", requireUser, async (req, res, next) => {
   const { name, price } = req.body;
   const productData = {};
@@ -30,7 +30,7 @@ productRouter.post("/", requireUser, async (req, res, next) => {
   }
 });
 
-// GET ALL POSTS
+// GET ALL PRODUCTS 
 productRouter.get("/", async (req, res, next) => {
   try {
     const allProducts = await getAllProduct();
@@ -76,3 +76,23 @@ productRouter.patch("/:productId", requireUser, async (req, res, next) => {
     next({ name, message });
   }
 });
+
+// DELETE A PRODUCT 
+productRouter.delete('/:productId', requireUser, async (req, res, next) => {
+  try {
+    const product = await getProductById(req.params.productId)
+    if(product && product.author.id === req.user.id) {
+      const deleteProduct = await updateProduct(product.id, {active: false});
+
+      res.send({product: deleteProduct})
+    } else {
+      next({
+        name: "UnauthorizedUserError",
+        message: "cannot delete a post that is not yours"
+      })
+    }
+    
+  } catch ({name, message}) {
+    next({name, message})
+  }
+})

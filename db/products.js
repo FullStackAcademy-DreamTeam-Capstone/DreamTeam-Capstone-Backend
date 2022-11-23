@@ -1,5 +1,4 @@
 const client = require('./client')
-const {getUserById} = require('./users')
 
 async function getAllProduct(){
     const {rows: [product]} = await client.query(`
