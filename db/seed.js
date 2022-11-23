@@ -2,19 +2,14 @@
 const client = require("./client");
 const { createUser, getAllUsers, getUserById, updateUser, getUser, getUserByUserName } = require("./users");
 
-// testing createUser
+// testing createUser 
 async function testCreateUser() {
   try {
-    console.log("user is being created");
-    const andrew = await createUser({
-      username: "andrewIsCool",
-      password: "iLoveDogs",
-      name: "andrew",
-      location: "Georgia",
-    });
-    console.log("finished creating the user");
+    console.log("user is being created") 
+    const andrew = await createUser({username: "andrewIsCool", password: "iLoveDogs", name: "andrew", location: "Georgia"});
+    console.log("finished creating the user")
   } catch (error) {
-    console.error("Error creating a user");
+    console.error('Error creating a user')
   }
 }
 
@@ -26,7 +21,7 @@ async function dropTables() {
     DROP TABLE IF EXISTS cart;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS users;
-    `);
+    `); 
 
     console.log("Finished dropping all tables...");
   } catch (error) {
@@ -87,6 +82,8 @@ async function rebuildDB() {
     client.connect();
     await dropTables();
     await createTables();
+
+
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
