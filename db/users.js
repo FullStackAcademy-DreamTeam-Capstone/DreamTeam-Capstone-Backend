@@ -102,7 +102,7 @@ async function getUserByUserName(userName) {
       `,
       [userName]
     );
-console.log(user, "USER")
+
     return user;
   } catch (error) {
     console.error(error);
