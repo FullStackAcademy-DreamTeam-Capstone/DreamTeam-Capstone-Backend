@@ -2,7 +2,13 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
-const { getUser, getUserByUserName, createUser } = require("../db/users");
+const {
+  getUser,
+  getUserByUserName,
+  createUser,
+  getUserById,
+  updateUser
+} = require("../db/users");
 const { requireUser } = require("./utils");
 
 //LOGIN
@@ -16,14 +22,13 @@ router.post("/login", async (req, res, next) => {
   }
   try {
     const user = await getUser({ username, password });
-    
+
     if (user) {
-      
       const token = jwt.sign({ id: user.id, username }, JWT_SECRET, {
         expiresIn: "1w",
       });
-      
-      res.send({ user, token:token, message: "you're logged in!" });
+
+      res.send({ user, token: token, message: "you're logged in!" });
     } else {
       next({
         name: "Incorrect Credentials Error",
@@ -56,8 +61,8 @@ router.post("/register", async (req, res, next) => {
       const user = await createUser({
         username,
         password,
-        name, 
-        location
+        name,
+        location,
       });
 
       const token = jwt.sign(
@@ -75,11 +80,10 @@ router.post("/register", async (req, res, next) => {
         user,
         message: "thank you for signing up",
         token: token,
-        
       });
     }
-  } catch ({name, message}) {
-    next({name, message});
+  } catch ({ name, message }) {
+    next({ name, message });
   }
 });
 
@@ -92,6 +96,36 @@ router.get("/me", requireUser, async (req, res, next) => {
     res.send(userInfo);
   } catch (err) {
     next(err);
+  }
+});
+
+//UPDATE USERS
+router.patch("/:userId", requireUser, async (req, res, next) => {
+  const { userId } = req.params;
+  const { username, password } = req.body;
+  const updateUser = {};
+
+  if (username) {
+    updatedUser.username = username;
+  }
+  if (password) {
+    updatedUser.password = password;
+  }
+  try {
+    const users = await getUserById(userId);
+
+    if (users.author.id === req.user.id) {
+      const updatedUser = await updateUser(userId, updatedUser)
+      res.send({ user: updatedUser})
+    }
+    else {
+      next ({
+        name:"UnauthorizedUser",
+        message:"Cannot update this user profile."
+      })
+    }
+  } catch ({ name, message }) {
+    next({ name, message });
   }
 });
 
