@@ -31,7 +31,7 @@ async function createUser({ username, password, name, location }) {
 
 async function updateUser(id, fields = {}) {
   const setString = Object.keys(fields).map((key,index) => `"${key}" = $${index + 1}`).join(',')
-  if (setString.legnth === 0){
+  if (setString.length === 0){
     return
   } 
 
