@@ -1,14 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const { getCart, getCart } = require("../db/cart");
+const { 
+    getCart } = require("../db/cart");
 const { requireUser } = require('./utils')
 
 // POST api/cart
 
 // GET api/cart
 router.get("/", async (req,res,next) =>{
-    const getCart = await getCart();
-    res.send(getCart);
+    try {
+        const getAllCart = await getCart();
+        res.send(getAllCart);
+    } catch ({name, message}) {
+        next({name, message})
+    }
+    
 });
 // PATCH api/cart
 

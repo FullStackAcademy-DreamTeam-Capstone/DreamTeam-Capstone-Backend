@@ -1,4 +1,5 @@
 // const {createUser} = require('./users')
+const { createCart, getCart } = require("./cart");
 const client = require("./client");
 const { createUser, getAllUsers, getUserById, updateUser, getUser, getUserByUserName } = require("./users");
 
@@ -93,6 +94,7 @@ async function rebuildDB() {
 async function testDB() {
   console.log("starting to test database");
 
+  //testing createUser
   console.log("testing createUser");
   const result = await createUser({
     username: "andrewIsCool",
@@ -100,28 +102,41 @@ async function testDB() {
     name: "andrew",
     location: "Georgia",
   });
-
   console.log("result:", result);
 
+  // testing getAllUsers
   console.log("testing getAllUsers")
   const users = await getAllUsers();
-
   console.log("Result:", users);
 
+  // testing getUserById
   console.log("testing getUserById")
   const andrew = await getUserById(1)
-
   console.log("Result:", andrew);
 
+  // testing creating a cart
+  console.log("testing createCart");
+  const cart = await createCart({
+    user_id: "ming",
+    isActive: "true"
+  });
+  console.log("Result:", cart)
+
+  // testing getCart
+  console.log("testing getCart");
+  const getAllCart = await getCart();
+  console.log("Result:", getAllCart)
+
+  // testing updateUser
   console.log("testing updateUser")
   const update = await updateUser(users[0].id, {
     username: "timothyIsCool",
     name: "timothy",
     location: "Ohio"
   });
-  
   console.log("Result:", update);
 
+  // letting us know its finished
   console.log("finished testing database");
 }
 
