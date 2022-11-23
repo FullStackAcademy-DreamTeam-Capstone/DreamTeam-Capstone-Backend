@@ -18,13 +18,13 @@ async function getCartById(id){
     return cart;
 }
 
-async function createCart(user_id){
+async function createCart(user_id, isActive){
     const {rows: [cart]} = await client.query(`
-    INSERT INTO cart(user_id)
-    VALUES($1)
+    INSERT INTO cart(user_id, isActive)
+    VALUES($1, $2)
     ON CONFLICT (user_id) DO NOTHING
     RETURNING *;
-    `, [user_id]);
+    `, [user_id, isActive]);
 
     return cart;
 }
@@ -42,9 +42,31 @@ async function updateCart({ id, ...fields }) {
     return updatedCart;
 }
 
+async function canEditCart(cartId, userId){
+    const {rows: [canEditCart]} = await client.query(`
+    SELECT user.id
+    FROM users
+    WHERE id IN (SELECT user_id FROM cart WHERE id = ${cartId})
+    `);
+
+    return canEditCart.user.id === userId;
+}
+
+async function destroyCart(id){
+    const {rows: [destroyedCart]} = await client.query(`
+    DELETE FROM cart
+    WHERE id = ${id}
+    RETURNING *;
+    `)
+
+    return destroyedCart;
+}
+
 module.exports = {
     getCart,
     getCartById,
     createCart,
-    updateCart
+    updateCart,
+    destroyCart,
+    canEditCart
 }
