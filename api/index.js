@@ -1,6 +1,7 @@
 const express = require('express');
 const apiRouter = express.Router();
 const jwt = require('jsonwebtoken');
+const router = require('./users');
 
 const {JWT_secret} = process.env;
 
@@ -24,4 +25,8 @@ apiRouter.use( async, (req, res, next) => {
         })
     }
 })
+
+const usersRouter = require('./users');
+router.use('/users', usersRouter);
+
 module.exports = apiRouter;
