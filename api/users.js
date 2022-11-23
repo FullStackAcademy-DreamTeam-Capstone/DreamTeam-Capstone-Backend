@@ -113,6 +113,7 @@ router.patch("/:userId", requireUser, async (req, res, next) => {
   }
   try {
     const users = await getUserById(userId);
+    console.log(users, 'users116')
 
     if (users.author.id === req.user.id) {
       const updatedUser = await updateUser(userId, updatedUser)
