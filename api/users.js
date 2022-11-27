@@ -106,17 +106,18 @@ router.patch("/:userId", requireUser, async (req, res, next) => {
   const updateUser = {};
 
   if (username) {
-    updatedUser.username = username;
+    updateUser.username = username;
   }
   if (password) {
-    updatedUser.password = password;
+    updateUser.password = password;
   }
   try {
+    
     const users = await getUserById(userId);
-    console.log(users, 'users116')
+    console.log(users, "THIS is USERS")
 
     if (users.author.id === req.user.id) {
-      const updatedUser = await updateUser(userId, updatedUser)
+      const updatedUser = await updateUser(userId, updateUser)
       res.send({ user: updatedUser})
     }
     else {
