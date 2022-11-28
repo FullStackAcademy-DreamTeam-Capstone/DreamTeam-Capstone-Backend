@@ -90,14 +90,15 @@ router.patch("/:productId", requireUser, async (req, res, next) => {
 router.delete("/:productId", requireUser, async (req, res, next) => {
   console.log("made it to router.delete")
   const { productId } = req.params;
+  console.log(req.params, "this is req.params")
 
   try {
     const product = await getProductById(req.params.productId);
     console.log(product, "this is the product")
     if ( product.id == productId) {
-      const deleteProduct = await updateProduct(product.id, { active: false });
+      console.log("we made it to the if")
+      const deleteProduct = await updateProduct(product.id, {active: false} );
       console.log(deleteProduct, "this is the deleted product")
-
       res.send({ product: deleteProduct });
     } else {
       next({
