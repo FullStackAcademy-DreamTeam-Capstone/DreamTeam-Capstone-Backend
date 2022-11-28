@@ -2,33 +2,34 @@ const express = require("express");
 const router = express.Router();
 const {
   getCart,
-  getCart,
   createCart,
   getCartById,
   updateCart,
 } = require("../db/cart");
 const { requireUser } = require("./utils");
 
+router.use((req, res, next) => {
+  console.log("PULLING FROM CART API");
+  next();
+});
+
 // POST(CREATE CART) api/cart
-router.post("/", requireUser, async (req, res, next) => {
-  const { user_id, isActive } = req.body;
-  const cartData = {};
-
+router.post("/", async (req, res, next) => {
+  console.log("CURRENTLY POST CART")
+  const { user_id } = req.body;
+  console.log(req.body)
   try {
-    cartData.authorId = req.user.id;
-    cartData.name = user_id;
-    cartData.isActive = isActive;
-
-    const cart = await createCart(cartData);
-
+    const cart = await createCart(user_id);
+    console.log("cart 26")
     if (cart) {
       res.send({ cart });
     } else {
       next();
     }
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch ({ error, name, message }) {
+    next({ error, name, message });
   }
+  console.log("finished cart POST")
 });
 
 // GET api/cart
@@ -68,12 +69,13 @@ router.patch("/:cartId", requireUser, async (req, res, next) => {
       res.send({ post: finalCart });
     } else {
       next({
-        name: "UnauthorizedUser",
-        message: "Cannot update a cart that is not yours.",
+        error: "number",
+        name: "UnauthorizedUserError",
+        message: "Cart is not yours; cannot update.",
       });
     }
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch ({ error, name, message }) {
+    next({ error, name, message });
   }
 });
 // DELETE api/cart
@@ -86,12 +88,13 @@ router.delete("/:cartId", requireUser, async (req, res, next) => {
       res.send({ cart: deleteCart });
     } else {
       next({
+        error: "number",
         name: "UnauthorizedUserError",
-        message: "Cannot delete a cart that is not yours",
+        message: "Cart is not yours; cannot delete.",
       });
     }
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch ({ error, name, message }) {
+    next({ error, name, message });
   }
 });
 

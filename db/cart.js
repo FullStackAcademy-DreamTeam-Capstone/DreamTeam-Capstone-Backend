@@ -18,13 +18,12 @@ async function getCartById(id){
     return cart;
 }
 
-async function createCart(user_id, isActive){
+async function createCart(user_id){
     const {rows: [cart]} = await client.query(`
-    INSERT INTO cart(user_id, isActive)
-    VALUES($1, $2)
-    ON CONFLICT (user_id) DO NOTHING
+    INSERT INTO cart(user_id)
+    VALUES($1)
     RETURNING *;
-    `, [user_id, isActive]);
+    `, [user_id]);
 
     return cart;
 }
