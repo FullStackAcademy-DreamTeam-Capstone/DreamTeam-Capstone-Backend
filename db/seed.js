@@ -64,7 +64,8 @@ async function createTables() {
       id SERIAL PRIMARY KEY,
       name VARCHAR(255) UNIQUE NOT NULL,
       price VARCHAR(255) NOT NULL,
-      img_url TEXT
+      img_url TEXT,
+      active BOOLEAN DEFAULT true
     );
     `);
 
@@ -107,33 +108,33 @@ async function rebuildDB() {
 async function testDB() {
   console.log("starting to test database");
 
-  // console.log("testing createUser");
-  // const result = await createUser({
-  //   username: "andrewIsCool",
-  //   password: "iLoveDogs",
-  //   name: "andrew",
-  //   location: "Georgia",
-  // });
+  console.log("testing createUser");
+  const result = await createUser({
+    username: "andrewIsCool",
+    password: "iLoveDogs",
+    name: "andrew",
+    location: "Georgia",
+  });
 
-  // console.log("result:", result);
+  console.log("result:", result);
 
-  // console.log("testing getAllUsers");
-  // const users = await getAllUsers();
+  console.log("testing getAllUsers");
+  const users = await getAllUsers();
 
-  // console.log("Result:", users);
+  console.log("Result:", users);
 
-  // console.log("testing getUserById");
-  // const andrew = await getUserById(1);
+  console.log("testing getUserById");
+  const andrew = await getUserById(1);
 
-  // console.log("Result:", andrew);
+  console.log("Result:", andrew);
 
-  // console.log("testing updateUser");
-  // const update = await updateUser(users[0].id, {
-  //   username: "timothyIsCool",
-  //   name: "timothy",
-  //   location: "Ohio",
-  // });
-  // console.log("Result:", update);
+  console.log("testing updateUser");
+  const update = await updateUser(users[0].id, {
+    username: "timothyIsCool",
+    name: "timothy",
+    location: "Ohio",
+  });
+  console.log("Result:", update);
 
   console.log("testing create products");
   const productResult = await createProduct({
