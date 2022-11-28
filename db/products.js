@@ -59,20 +59,23 @@ async function createProduct({ name, price }) {
 
 async function updateProduct(id, fields = {}) {
   const setString = Object.keys(fields)
-    .map((elem, index) => `"${elem}"=$${index + 1}`)
-    .join(", ");
-  console.log(setString);
-  const {
-    rows: [updatedProduct],
-  } = await client.query(
+  .map((elem, index) => `"${elem}"=$${index + 1}`)
+  .join(", ");
+  console.log(fields, "this is obj.values", id)
+  ;
+  const reply = await client.query(
     `
     UPDATE products
     SET ${setString}
     WHERE id=${id}
-    RETURNING *;
+
+
     `,
     Object.values(fields)
-  );
+  ); const {
+    rows: [updatedProduct],
+  } = reply
+  console.log(reply, "this is reply")
   return updatedProduct;
 }
 
