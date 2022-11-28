@@ -64,7 +64,8 @@ async function createTables() {
       id SERIAL PRIMARY KEY,
       name VARCHAR(255) UNIQUE NOT NULL,
       price VARCHAR(255) NOT NULL,
-      img_url TEXT
+      img_url TEXT,
+      active BOOLEAN DEFAULT true
     );
     `);
 
