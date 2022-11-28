@@ -89,6 +89,7 @@ router.post("/register", async (req, res, next) => {
 
 //ME
 router.get("/me", requireUser, async (req, res, next) => {
+  console.log("We made it")
   const username = req.user.username;
 
   try {
