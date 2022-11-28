@@ -101,23 +101,28 @@ router.get("/me", requireUser, async (req, res, next) => {
 
 //UPDATE USERS
 router.patch("/:userId", requireUser, async (req, res, next) => {
+  // console.log("hello")
   const { userId } = req.params;
+  // console.log(req.params, "this is req.params")
   const { username, password } = req.body;
-  const updateUser = {};
+  // console.log(req.body, "this is req.body")
+  const updateUsers = {};
 
   if (username) {
-    updateUser.username = username;
+    updateUsers.username = username;
   }
   if (password) {
-    updateUser.password = password;
+    updateUsers.password = password;
   }
   try {
     
     const users = await getUserById(userId);
-    console.log(users, "THIS is USERS")
-
-    if (users.author.id === req.user.id) {
-      const updatedUser = await updateUser(userId, updateUser)
+    // console.log(users, "THIS is USERS")
+    
+    if (users.id == req.user.id) {
+      // console.log("made it to if state")
+      const updatedUser = await updateUser(userId, updateUsers)
+      // console.log(updatedUser, "this is updateUser")
       res.send({ user: updatedUser})
     }
     else {
