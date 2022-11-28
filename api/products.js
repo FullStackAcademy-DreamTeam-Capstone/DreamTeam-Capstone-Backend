@@ -18,8 +18,8 @@ router.use((req, res, next) => {
 
 // CREATE PRODUCT
 // NEED TO ADD "REQUIRE USER", IT WORKS WITHOUT AND I AM NOT SURE IF WE CAN DO SOMETHING ELSE TO VERIFY THE LOGIN
-router.post("/", async (req, res, next) => {
-  console.log("we are making it to the api /products");
+router.post("/", requireUser, async (req, res, next) => {
+  console.log("we are making it to router.post for create product");
   const { name, price } = req.body;
   
   try {
@@ -34,7 +34,7 @@ router.post("/", async (req, res, next) => {
   } catch ({ name, message }) {
     next({ name, message });
   }
-  console.log( "we made it to the api call"); 
+  console.log( "we finished creating the product"); 
 });
 
 // GET ALL PRODUCTS

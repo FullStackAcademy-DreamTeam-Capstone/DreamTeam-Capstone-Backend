@@ -6,12 +6,15 @@ const {getUserById} = require("../db/users")
 
 
 apiRouter.use(async (req, res, next) => {
-  const prefix = "Bearer";
+  console.log("We made it to apiRouter.use")
+  const prefix = "Bearer ";
   const auth = req.header("Authorization");
+  console.log(auth)
   if (!auth) {
     next();
   } else if (auth.startsWith(prefix)) {
     const token = auth.slice(prefix.length);
+    console.log(token, "this is token") 
     try {
       const { id } = jwt.verify(token, JWT_SECRET);
 
