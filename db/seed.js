@@ -73,7 +73,7 @@ async function createTables() {
     CREATE TABLE cart (
       id SERIAL PRIMARY KEY,
       user_id VARCHAR(255) NOT NULL,
-      isActive BOOLEAN 
+      isActive BOOLEAN DEFAULT true
     );
     `);
 

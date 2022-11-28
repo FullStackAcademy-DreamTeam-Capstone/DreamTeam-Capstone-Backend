@@ -14,7 +14,7 @@ apiRouter.use(async (req, res, next) => {
   } else if (auth.startsWith(prefix)) {
     const token = auth.slice(prefix.length);
     try {
-      const { id } = jwt.verify(token, JWT_SECRET);
+      const { id } = jwt.verify(token, JWT_secret);
 
       if (id) {
         req.user = await getUserById(id);
@@ -37,6 +37,7 @@ apiRouter.use("/users", usersRouter);
 const productsRouter = require("./products");
 apiRouter.use("/products", productsRouter);
 
-
+const cartRouter = require('./cart');
+apiRouter.use('/cart', cartRouter);
 
 module.exports = apiRouter;
