@@ -6,7 +6,7 @@ const {getUserById} = require("../db/users")
 
 
 apiRouter.use(async (req, res, next) => {
-  console.log("We made it to apiRouter.use")
+  // console.log("We made it to apiRouter.use")
   const prefix = "Bearer ";
   const auth = req.header("Authorization");
   if (!auth) {
@@ -33,7 +33,6 @@ apiRouter.use(async (req, res, next) => {
 
 const usersRouter = require("./users");
 apiRouter.use("/users", usersRouter);
-
 
 const productsRouter = require("./products");
 apiRouter.use("/products", productsRouter);
