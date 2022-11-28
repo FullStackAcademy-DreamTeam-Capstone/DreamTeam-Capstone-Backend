@@ -1,25 +1,31 @@
 const express = require("express");
-const productRouter = express.Router();
+const router = express.Router();
 const { requireUser } = require("./utils");
+const {jwt} = require("jsonwebtoken");
+const { JWT_SECRET } = process.env;
 const {
   getAllProduct,
   createProduct,
   updateProduct,
   getProductById,
-} = require("./products");
+} = require("../db/products");
+
+//MAKING SURE A REQUEST ID BEING MADE TO /products
+router.use((req, res, next) => {
+  console.log("we made it to the products api")
+  next();
+});
 
 // CREATE PRODUCT
-productRouter.post("/", requireUser, async (req, res, next) => {
+// NEED TO ADD "REQUIRE USER", IT WORKS WITHOUT AND I AM NOT SURE IF WE CAN DO SOMETHING ELSE TO VERIFY THE LOGIN
+router.post("/", async (req, res, next) => {
+  console.log("we are making it to the api /products");
   const { name, price } = req.body;
-  const productData = {};
-
+  
   try {
-    productData.authorId = req.user.id;
-    productData.name = name;
-    productData.price = price;
-
-    const product = await createProduct(productData);
-
+  
+    const product = await createProduct({name, price});
+    console.log(product, "this is product")
     if (product) {
       res.send({ product });
     } else {
@@ -28,10 +34,11 @@ productRouter.post("/", requireUser, async (req, res, next) => {
   } catch ({ name, message }) {
     next({ name, message });
   }
+  console.log( "we made it to the api call"); 
 });
 
-// GET ALL PRODUCTS 
-productRouter.get("/", async (req, res, next) => {
+// GET ALL PRODUCTS
+router.get("/", async (req, res, next) => {
   try {
     const allProducts = await getAllProduct();
     const products = allProducts.filter((post) => {
@@ -48,16 +55,17 @@ productRouter.get("/", async (req, res, next) => {
 });
 
 // UPDATING A PRODUCT
-productRouter.patch("/:productId", requireUser, async (req, res, next) => {
+// TOOK OUT requireUser, "ask for help"
+router.patch("/:productId", async (req, res, next) => {
   const { productId } = req.params;
   const { name, price } = req.body;
   const updateProduct = {};
 
   if (name) {
-    updatedProduct.name = name;
+    updateProduct.name = name;
   }
   if (price) {
-    updatedProduct.price = price;
+    updateProduct.price = price;
   }
 
   try {
@@ -77,22 +85,24 @@ productRouter.patch("/:productId", requireUser, async (req, res, next) => {
   }
 });
 
-// DELETE A PRODUCT 
-productRouter.delete('/:productId', requireUser, async (req, res, next) => {
+// DELETE A PRODUCT
+// TOOK OUT requireUser, "ask for help"
+router.delete("/:productId",  async (req, res, next) => {
   try {
-    const product = await getProductById(req.params.productId)
-    if(product && product.author.id === req.user.id) {
-      const deleteProduct = await updateProduct(product.id, {active: false});
+    const product = await getProductById(req.params.productId);
+    if (product && product.author.id === req.user.id) {
+      const deleteProduct = await updateProduct(product.id, { active: false });
 
-      res.send({product: deleteProduct})
+      res.send({ product: deleteProduct });
     } else {
       next({
         name: "UnauthorizedUserError",
-        message: "cannot delete a post that is not yours"
-      })
+        message: "cannot delete a post that is not yours",
+      });
     }
-    
-  } catch ({name, message}) {
-    next({name, message})
+  } catch ({ name, message }) {
+    next({ name, message });
   }
-})
+});
+
+module.exports = router;

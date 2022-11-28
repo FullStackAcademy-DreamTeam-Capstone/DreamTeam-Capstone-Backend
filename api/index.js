@@ -1,12 +1,11 @@
 const express = require("express");
 const apiRouter = express.Router();
-
 const jwt = require("jsonwebtoken");
+const { JWT_SECRET } = process.env;
+const {getUserById} = require("../db/users")
 
-const { JWT_secret } = process.env;
 
 apiRouter.use(async (req, res, next) => {
-  console.log('anything')
   const prefix = "Bearer";
   const auth = req.header("Authorization");
   if (!auth) {
@@ -33,5 +32,11 @@ apiRouter.use(async (req, res, next) => {
 
 const usersRouter = require("./users");
 apiRouter.use("/users", usersRouter);
+
+
+const productsRouter = require("./products");
+apiRouter.use("/products", productsRouter);
+
+
 
 module.exports = apiRouter;
