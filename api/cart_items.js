@@ -17,7 +17,7 @@ router.use((req, res, next) => {
 router.post("/",  async (req, res, next) => {
   const { productId, cartId, price, quantity } = req.body;
   const cartItemData = {};
-  console.log("15")
+  
   try {
     cartItemData.productId = productId;
     cartItemData.cartId = cartId;
@@ -25,7 +25,6 @@ router.post("/",  async (req, res, next) => {
     cartItemData.quantity = quantity;
     console.log(cartItemData)
     const cartItem = await createCartItem(cartItemData);
-
     if (cartItem) {
       res.send({ cartItem });
     } else {
@@ -40,14 +39,9 @@ router.post("/",  async (req, res, next) => {
 router.get("/", async (req, res, next) => {
   try {
     const cartItem = await getAllCartItem();
-    const cart = cartItem.filter((post) => {
-      if (post.active) {
-        return true;
-      }
-    });
-    res.send({
-      cart,
-    });
+    res.send(
+      cartItem
+    );
   } catch ({ name, message }) {
     next({ name, message });
   }
