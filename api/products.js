@@ -39,6 +39,7 @@ router.post("/", requireUser, async (req, res, next) => {
 router.get("/", async (req, res, next) => {
   try {
     const allProducts = await getAllProduct();
+    console.log(allProducts)
     const products = allProducts.filter((post) => {
       if (post.active) {
         return true;
