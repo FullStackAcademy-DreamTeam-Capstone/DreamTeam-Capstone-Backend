@@ -55,7 +55,7 @@ router.patch("/:cartId", requireUser, async (req, res, next) => {
   const updatedCart = {};
 
   if (user_id) {
-    updatedCart.name = user_id;
+    updatedCart.user_id = user_id;
   }
   if (isActive) {
     updatedCart.isActive = isActive;
@@ -78,6 +78,7 @@ router.patch("/:cartId", requireUser, async (req, res, next) => {
     next({ error, name, message });
   }
 });
+
 // DELETE api/cart
 router.delete("/:cartId", requireUser, async (req, res, next) => {
   try {

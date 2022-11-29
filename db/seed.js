@@ -13,6 +13,7 @@ const {
   createProduct, getAllProduct, updateProduct, getProductById, getProductByName
 } = require("./products");
 const { createCart, getCart, updateCart, getCartById } = require("./cart");
+const { createCartItem } = require("./cart_item");
 
 // testing createUser
 async function testCreateUser() {
@@ -83,7 +84,7 @@ async function createTables() {
       id SERIAL PRIMARY KEY,
       "productId" INTEGER REFERENCES products(id),
       "cartId" INTEGER REFERENCES cart(id),
-      price INTEGER,
+      price VARCHAR(255) NOT NULL,
       quantity INTEGER
     );
     `);
@@ -180,6 +181,10 @@ async function testDB() {
   console.log("testing getCartById")
   const getTheCartById = await getCartById(1);
   console.log("finished testing getCartById", getTheCartById)
+
+  console.log("testing createCartItem")
+  const createdCartItem = createCartItem();
+  console.log("finished testing createCartItem", createdCartItem)
 
   console.log("finished testing database");
 }

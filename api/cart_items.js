@@ -8,18 +8,22 @@ const {
 } = require("../db/cart_item");
 const { requireUser } = require("./utils");
 
+router.use((req, res, next) => {
+  console.log("PULLING FROM CART_ITEMS API");
+  next();
+});
+
 // POST api/cart_item
-router.post("/", requireUser, async (req, res, next) => {
+router.post("/",  async (req, res, next) => {
   const { productId, cartId, price, quantity } = req.body;
   const cartItemData = {};
-
+  console.log("15")
   try {
-    cartItemData.authorId = req.user.id;
     cartItemData.productId = productId;
     cartItemData.cartId = cartId;
     cartItemData.price = price;
     cartItemData.quantity = quantity;
-
+    console.log(cartItemData)
     const cartItem = await createCartItem(cartItemData);
 
     if (cartItem) {
