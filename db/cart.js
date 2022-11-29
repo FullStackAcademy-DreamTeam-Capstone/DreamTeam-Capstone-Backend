@@ -1,7 +1,7 @@
 const client = require('./client')
 
 async function getCart(){
-    const {rows: [cart]} = await client.query(`
+    const {rows: cart} = await client.query(`
     SELECT *
     FROM cart;
     `);
@@ -28,18 +28,24 @@ async function createCart(user_id){
     return cart;
 }
 
-async function updateCart({ id, ...fields }) {
-    const setString = Object.keys(fields).map(
-      (elem, index) => `"${elem}"=$${index + 1}`
-    ).join(', ');
-    const {rows: [updatedCart]} = await client.query(`
-    UPDATE cart
-    SET ${setString}
-    WHERE id=${id}
-    RETURNING *;
-    `, Object.values(fields))
+async function updateCart(id, fields = {}) {
+    const setString = Object.keys(fields)
+      .map((elem, index) => `"${elem}"=$${index + 1}`)
+      .join(", ");
+    console.log(setString);
+    const {
+      rows: [updatedCart],
+    } = await client.query(
+      `
+      UPDATE cart
+      SET ${setString}
+      WHERE id=${id}
+      RETURNING *;
+      `,
+      Object.values(fields)
+    );
     return updatedCart;
-}
+  }
 
 async function canEditCart(cartId, userId){
     const {rows: [canEditCart]} = await client.query(`
