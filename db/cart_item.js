@@ -23,7 +23,6 @@ async function createCartItem(productId, cartId, price, quantity){
     const {rows: [createdCartItem]} = await client.query(`
     INSERT INTO cart_item("productId", "cartId", price, quantity)
     VALUES ($1, $2, $3, $4)
-    ON CONFLICT (productId) DO NOTHING
     RETURNING *;
     `, [productId, cartId, price, quantity]);
 
