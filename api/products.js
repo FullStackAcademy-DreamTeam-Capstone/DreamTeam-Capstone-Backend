@@ -39,12 +39,8 @@ router.post("/", requireUser, async (req, res, next) => {
 // GET ALL PRODUCTS
 router.get("/", async (req, res, next) => {
   try {
-    const allProducts = await getAllProduct();
-    const products = allProducts.filter((post) => {
-      if (post.active) {
-        return true;
-      }
-    });
+    const allActiveProducts = await getAllActiveProducts();
+  
     res.send({
       allActiveProducts,
     });
