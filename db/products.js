@@ -9,14 +9,14 @@ async function getAllProduct() {
   return products;
 }
 
-async function getAllActiveProducts() {
-  const { rows: products } = await client.query(`
-    SELECT *
-    FROM products WHERE active=true
-    `);
+// async function getAllActiveProducts() {
+//   const { rows: products } = await client.query(`
+//     SELECT *
+//     FROM products WHERE active=true
+//     `);
 
-  return products;
-}
+//   return products;
+// }
  
 async function getProductById(id) {
   const {
@@ -94,5 +94,4 @@ module.exports = {
   getProductByName,
   createProduct,
   updateProduct,
-  getAllActiveProducts
 };
