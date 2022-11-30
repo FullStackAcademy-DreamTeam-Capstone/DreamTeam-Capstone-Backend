@@ -9,6 +9,15 @@ async function getAllProduct() {
   return products;
 }
 
+async function getAllActiveProducts() {
+  const { rows: products } = await client.query(`
+    SELECT *
+    FROM products WHERE active=true
+    `);
+
+  return products;
+}
+ 
 async function getProductById(id) {
   const {
     rows: [product],
@@ -85,4 +94,5 @@ module.exports = {
   getProductByName,
   createProduct,
   updateProduct,
+  getAllActiveProducts
 };
