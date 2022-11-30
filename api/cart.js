@@ -20,7 +20,6 @@ router.post("/", async (req, res, next) => {
   console.log(req.body)
   try {
     const cart = await createCart(user_id);
-    console.log("cart 26")
     if (cart) {
       res.send({ cart });
     } else {
@@ -36,6 +35,7 @@ router.post("/", async (req, res, next) => {
 router.get("/", async (req, res, next) => {
     try {
     const allCart = await getCart();
+    console.log(allCart)
     const cart = allCart.filter((post) => {
       if (post.active) {
         return true;
@@ -55,9 +55,9 @@ router.patch("/:cartId", requireUser, async (req, res, next) => {
   const updatedCart = {};
 
   if (user_id) {
-    updatedCart.name = user_id;
+    updatedCart.user_id = user_id;
   }
-  if (price) {
+  if (isActive) {
     updatedCart.isActive = isActive;
   }
 
@@ -78,6 +78,7 @@ router.patch("/:cartId", requireUser, async (req, res, next) => {
     next({ error, name, message });
   }
 });
+
 // DELETE api/cart
 router.delete("/:cartId", requireUser, async (req, res, next) => {
   try {
