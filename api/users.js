@@ -43,7 +43,7 @@ router.post("/login", async (req, res, next) => {
 
 //REGISTER
 router.post("/register", async (req, res, next) => {
-  const { username, password, name, location } = req.body;
+  const { username, password, name, location, email } = req.body;
 
   try {
     const _user = await getUserByUserName(username);
@@ -63,6 +63,7 @@ router.post("/register", async (req, res, next) => {
         password,
         name,
         location,
+        email,
       });
 
       const token = jwt.sign(
