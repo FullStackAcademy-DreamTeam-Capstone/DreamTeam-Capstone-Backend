@@ -166,9 +166,13 @@ async function testDB() {
   console.log("testing create products");
   const productResult = await createProduct({
     name: "toy car",
-    price: "$99"
+    price: "99",
   });
-  console.log("productResult", productResult);
+  const productResults = await createProduct({
+    name: "Bike",
+    price: "30",
+  });
+  console.log("productResult", productResults);
 
   console.log("testing get all products");
   const products = await getAllProduct();

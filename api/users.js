@@ -110,7 +110,7 @@ router.patch("/:userId", requireUser, async (req, res, next) => {
   // console.log(req.body, "this is req.body")
   const updateUsers = {};
 
-  if (username) {
+  if (name) {
     updateUsers.name = name;
   }
   if (password) {
