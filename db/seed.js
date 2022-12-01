@@ -10,10 +10,16 @@ const {
 } = require("./users");
 
 const {
-  createProduct, getAllProduct, updateProduct, getProductById, getProductByName
+  createProduct,
+  getAllProduct,
+  updateProduct,
+  getProductById,
+  getProductByName,
 } = require("./products");
 const { createCart, getCart, updateCart, getCartById } = require("./cart");
+
 const { createCartItem } = require("./cart_item");
+
 
 // testing createUser
 async function testCreateUser() {
@@ -30,6 +36,21 @@ async function testCreateUser() {
     console.error("Error creating a user");
   }
 }
+
+// testing createAddress
+async function testCreateAddress() {
+  try {
+    console.log("address is being created")
+    const minh = await createAddress({
+        email: "minhNguyen@yahoo.com",
+
+      });
+      console.log("finished creating the address")
+      } catch (error) {
+        console.error("Error creating a address")
+      }
+    }
+
 
 async function dropTables() {
   try {
@@ -54,10 +75,12 @@ async function createTables() {
     await client.query(`
     CREATE TABLE users (
       id SERIAL PRIMARY KEY,
-      username varchar(255) UNIQUE NOT NULL,
+      username varchar(255) NOT NULL,
       password varchar(255) NOT NULL,
-      name VARCHAR(255) UNIQUE NOT NULL, 
-      location VARCHAR(255) NOT NULL
+      name VARCHAR(255) NOT NULL, 
+      location VARCHAR(255) NOT NULL,
+      email VARCHAR(255) NOT NULL,
+      UNIQUE(username,email)
     );
     `);
 
@@ -108,7 +131,7 @@ async function rebuildDB() {
 }
 
 async function testDB() {
-  console.log("starting to test database");
+  // console.log("starting to test database");
 
   console.log("testing createUser");
   const result = await createUser({
@@ -116,6 +139,7 @@ async function testDB() {
     password: "iLoveDogs",
     name: "andrew",
     location: "Georgia",
+    email: "minhNguyen@yahoo.com"
   });
 
   console.log("result:", result);
@@ -135,6 +159,7 @@ async function testDB() {
     username: "timothyIsCool",
     name: "timothy",
     location: "Ohio",
+    email: "aandrew.myles@gmail.com"
   });
   console.log("Result:", update);
 
@@ -153,12 +178,12 @@ async function testDB() {
   const product1 = await getProductById(1);
   console.log("getProductById result", product1);
 
-  console.log("testing the update products");
-  const updatingProduct = await updateProduct(products[0].id, {
-    name: "toy truck",
-    price: "$30"
-  });
-  console.log("updateProduct test", updatingProduct);
+  // console.log("testing the update products");
+  // const updatingProduct = await updateProduct(products[0].id, {
+  //   name: "toy truck",
+  //   price: "$30"
+  // });
+  // console.log("updateProduct test", updatingProduct);
 
   console.log("testing getProductByName");
   const productByName = await getProductByName("toy truck");
@@ -183,7 +208,11 @@ async function testDB() {
   console.log("finished testing getCartById", getTheCartById)
 
   console.log("testing createCartItem")
-  const createdCartItem = createCartItem();
+  const createdCartItem = await createCartItem({
+    "price": 1,
+    "quantity": 3
+  });
+
   console.log("finished testing createCartItem", createdCartItem)
 
   console.log("finished testing database");
