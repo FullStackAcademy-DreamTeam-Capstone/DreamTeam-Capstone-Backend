@@ -105,16 +105,20 @@ router.patch("/:userId", requireUser, async (req, res, next) => {
   // console.log("hello")
   const { userId } = req.params;
   // console.log(req.params, "this is req.params")
-  const { username, password } = req.body;
+  const { name, password, email } = req.body;
   // console.log(req.body, "this is req.body")
   const updateUsers = {};
 
   if (username) {
-    updateUsers.username = username;
+    updateUsers.name = name;
   }
   if (password) {
     updateUsers.password = password;
   }
+  if (email) {
+    updateUsers.email = email;
+  }
+
   try {
     
     const users = await getUserById(userId);

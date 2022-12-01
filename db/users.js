@@ -9,18 +9,18 @@ async function getAllUsers(){
   return rows
 }
 
-async function createUser({ username, password, name, location }) {
+async function createUser({ username, password, name, location, email }) {
   try {
     const {
       rows: [user],
     } = await client.query(
       `
-        INSERT INTO users(username, password, name, location)
-        VALUES ($1, $2, $3, $4)
-        ON CONFLICT (username) DO NOTHING
+        INSERT INTO users(username, password, name, location, email)
+        VALUES ($1, $2, $3, $4, $5)
+        ON CONFLICT (username, email) DO NOTHING
         RETURNING *;
       `,
-      [username, password, name, location]
+      [username, password, name, location, email]
     );
 
     return user;
