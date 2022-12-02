@@ -11,4 +11,18 @@ function requireUser(req, res, next) {
     next()
 }
 
-module.exports = {requireUser}
+function requireAdmin(req, res, next) {
+console.log(req.user, "this is req.user")
+
+    if (!req.user.isadmin) {
+        res.status(401)
+        next({
+            error: "401",
+            name: "MissingAdminError",
+            message: "You must be an Admin to perform this action"
+        })
+    }
+    next()
+}
+
+module.exports = {requireUser, requireAdmin}

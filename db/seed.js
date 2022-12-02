@@ -84,7 +84,8 @@ async function createTables() {
       name VARCHAR(255) NOT NULL, 
       location VARCHAR(255) NOT NULL,
       email VARCHAR(255) NOT NULL,
-      UNIQUE(username,email)
+      UNIQUE(username,email),
+      isAdmin BOOLEAN DEFAULT false
     );
     `);
 
@@ -143,7 +144,7 @@ async function testDB() {
     password: "iLoveDogs",
     name: "andrew",
     location: "Georgia",
-    email: "minhNguyen@yahoo.com"
+    email: "minhNguyen@yahoo.com",
   });
 
   console.log("result:", result);
@@ -163,7 +164,8 @@ async function testDB() {
     username: "timothyIsCool",
     name: "timothy",
     location: "Ohio",
-    email: "aandrew.myles@gmail.com"
+    email: "aandrew.myles@gmail.com",
+    isadmin: true
   });
   console.log("Result:", update);
 
