@@ -64,7 +64,7 @@ router.patch("/:cartId", requireUser, async (req, res, next) => {
   try {
     const cart = await getCartById(cartId);
 
-    if (cart.author.id === req.user.id) {
+    if (cart.user_id === req.user.id) {
       const finalCart = await updateCart(cartId, updatedCart);
       res.send({ post: finalCart });
     } else {
