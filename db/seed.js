@@ -18,12 +18,11 @@ const {
 } = require("./products");
 const { createCart, getCart, updateCart, getCartById } = require("./cart");
 
-const { createCartItem, changeQuantityInCart, deleteCartItem } = require("./cart_item");
-
-
-const { createCartItem } = require("./cart_item");
-
-
+const {
+  createCartItem,
+  changeQuantityInCart,
+  deleteCartItem,
+} = require("./cart_item");
 
 // testing createUser
 async function testCreateUser() {
@@ -44,17 +43,15 @@ async function testCreateUser() {
 // testing createAddress
 async function testCreateAddress() {
   try {
-    console.log("address is being created")
+    console.log("address is being created");
     const minh = await createAddress({
-        email: "minhNguyen@yahoo.com",
-
-      });
-      console.log("finished creating the address")
-      } catch (error) {
-        console.error("Error creating a address")
-      }
-    }
-
+      email: "minhNguyen@yahoo.com",
+    });
+    console.log("finished creating the address");
+  } catch (error) {
+    console.error("Error creating a address");
+  }
+}
 
 async function dropTables() {
   try {
@@ -111,7 +108,7 @@ async function createTables() {
       id SERIAL PRIMARY KEY,
       "productId" INTEGER REFERENCES products(id),
       "cartId" INTEGER REFERENCES cart(id),
-      price VARCHAR(255) NOT NULL,
+      price VARCHAR(255),
       quantity INTEGER
     );
     `);
@@ -143,7 +140,7 @@ async function testDB() {
     password: "iLoveDogs",
     name: "andrew",
     location: "Georgia",
-    email: "minhNguyen@yahoo.com"
+    email: "minhNguyen@yahoo.com",
   });
 
   console.log("result:", result);
@@ -163,7 +160,7 @@ async function testDB() {
     username: "timothyIsCool",
     name: "timothy",
     location: "Ohio",
-    email: "aandrew.myles@gmail.com"
+    email: "aandrew.myles@gmail.com",
   });
   console.log("Result:", update);
 
@@ -195,33 +192,33 @@ async function testDB() {
 
   console.log("testing getProductByName");
   const productByName = await getProductByName("toy truck");
-  console.log("finished getProductByName", productByName)
+  console.log("finished getProductByName", productByName);
 
   console.log("testing createCart");
   const createdCart = await createCart(1);
   console.log("created cart:", createdCart);
 
-  console.log("testing get cart")
+  console.log("testing get cart");
   const getTheCart = await getCart();
-  console.log("finished testing getCart", getTheCart)
+  console.log("finished testing getCart", getTheCart);
 
-  console.log("testing update cart")
+  console.log("testing update cart");
   const updateTheCart = await updateCart(getTheCart[0].id, {
-    user_id: "2"
+    user_id: "2",
   });
-  console.log("finished testing updateCart", updateTheCart)
+  console.log("finished testing updateCart", updateTheCart);
 
-  console.log("testing getCartById")
+  console.log("testing getCartById");
   const getTheCartById = await getCartById(1);
-  console.log("finished testing getCartById", getTheCartById)
+  console.log("finished testing getCartById", getTheCartById);
 
-  console.log("testing createCartItem")
+  console.log("testing createCartItem");
   const createdCartItem = await createCartItem({
-    "price": 1,
-    "quantity": 3
+    price: 1,
+    quantity: 3,
   });
 
-  console.log("finished testing createCartItem", createdCartItem)
+  console.log("finished testing createCartItem", createdCartItem);
 
   console.log("testing change quantity in cart");
   const changeTheQuantity = await changeQuantityInCart(1, 3);
