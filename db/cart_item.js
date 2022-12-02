@@ -42,9 +42,30 @@ async function updateCartItem(id, fields = {}){
       return updatedCartItem;
 }
 
+async function changeQuantityInCart(id, quantity){
+    const { rows : [changedQuantity]} = await client.query(`
+    UPDATE cart_item
+    SET quantity = ${quantity}
+    WHERE id = ${id}
+    RETURNING *;
+    `);
+    return changedQuantity;
+}
+
+async function deleteCartItem(id){
+    const {rows : [deletedItem]} = await client.query(`
+    DELETE FROM cart_item
+    WHERE id = ${id}
+    RETURNING *;
+    `);
+    return deletedItem;
+}
+
 module.exports = {
     getAllCartItem,
     getCartItemById,
     createCartItem,
-    updateCartItem
+    updateCartItem,
+    changeQuantityInCart,
+    deleteCartItem
 }
