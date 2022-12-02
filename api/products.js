@@ -19,10 +19,10 @@ router.use((req, res, next) => {
 // CREATE PRODUCT
 router.post("/", requireUser, async (req, res, next) => {
   console.log("we are making it to router.post for create product");
-  const { name, price } = req.body;
+  const { name, price, img_url } = req.body;
 
   try {
-    const product = await createProduct({ name, price });
+    const product = await createProduct({ name, price, img_url });
     console.log(product, "this is product");
     if (product) {
       res.send({ product });

@@ -46,18 +46,18 @@ async function getProductByName(name) {
   return product;
 }
 
-async function createProduct({ name, price }) {
+async function createProduct({ name, price, img_url }) {
   try {
     const {
       rows: [createdProduct],
     } = await client.query(
       `
-        INSERT INTO products(name, price)
-        VALUES ($1, $2)
+        INSERT INTO products(name, price, img_url)
+        VALUES ($1, $2, $3)
         ON CONFLICT (name) DO NOTHING
         RETURNING *;
         `,
-      [name, price]
+      [name, price, img_url]
     );
 
     return createdProduct;
