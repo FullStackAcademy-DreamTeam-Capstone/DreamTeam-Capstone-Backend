@@ -21,9 +21,6 @@ const { createCart, getCart, updateCart, getCartById } = require("./cart");
 const { createCartItem, changeQuantityInCart, deleteCartItem } = require("./cart_item");
 
 
-const { createCartItem } = require("./cart_item");
-
-
 
 // testing createUser
 async function testCreateUser() {
