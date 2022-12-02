@@ -107,7 +107,7 @@ router.patch("/:userId", requireUser, async (req, res, next) => {
   // console.log("hello")
   const { userId } = req.params;
   // console.log(req.params, "this is req.params")
-  const { name, password, email } = req.body;
+  const { name, password, email, isadmin } = req.body;
   // console.log(req.body, "this is req.body")
   const updateUsers = {};
 
@@ -119,6 +119,9 @@ router.patch("/:userId", requireUser, async (req, res, next) => {
   }
   if (email) {
     updateUsers.email = email;
+  }
+  if (isadmin) {
+    updateUsers.isadmin = isadmin;
   }
 
   try {
