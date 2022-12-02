@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { requireUser } = require("./utils");
+const { requireUser, requireAdmin } = require("./utils");
 const { jwt } = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 const {
@@ -17,7 +17,7 @@ router.use((req, res, next) => {
 });
 
 // CREATE PRODUCT
-router.post("/", requireUser, async (req, res, next) => {
+router.post("/", requireUser, requireAdmin, async (req, res, next) => {
   console.log("we are making it to router.post for create product");
   const { name, price } = req.body;
 
@@ -49,7 +49,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // UPDATING A PRODUCT
-router.patch("/:productId", requireUser, async (req, res, next) => {
+router.patch("/:productId", requireUser, requireAdmin, async (req, res, next) => {
   const { productId } = req.params;
 
   const { name, price } = req.body;
@@ -83,7 +83,7 @@ router.patch("/:productId", requireUser, async (req, res, next) => {
 
 // DELETE A PRODUCT
 // TOOK OUT requireUser, "ask for help"
-router.delete("/:productId", requireUser, async (req, res, next) => {
+router.delete("/:productId", requireUser, requireAdmin, async (req, res, next) => {
   console.log("made it to router.delete")
   const { productId } = req.params;
   console.log(req.params, "this is req.params")
