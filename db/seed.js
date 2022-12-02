@@ -18,7 +18,11 @@ const {
 } = require("./products");
 const { createCart, getCart, updateCart, getCartById } = require("./cart");
 
+const { createCartItem, changeQuantityInCart, deleteCartItem } = require("./cart_item");
+
+
 const { createCartItem } = require("./cart_item");
+
 
 
 // testing createUser
@@ -205,7 +209,7 @@ async function testDB() {
   const updateTheCart = await updateCart(getTheCart[0].id, {
     user_id: "2"
   });
-  console.log("finished testing updateCart")
+  console.log("finished testing updateCart", updateTheCart)
 
   console.log("testing getCartById")
   const getTheCartById = await getCartById(1);
@@ -218,6 +222,14 @@ async function testDB() {
   });
 
   console.log("finished testing createCartItem", createdCartItem)
+
+  console.log("testing change quantity in cart");
+  const changeTheQuantity = await changeQuantityInCart(1, 3);
+  console.log("finished changing quantity", changeTheQuantity);
+
+  console.log("testing delete item");
+  const deletedCartItem = await deleteCartItem(1);
+  console.log("finished deleting cart item", deletedCartItem);
 
   console.log("finished testing database");
 }

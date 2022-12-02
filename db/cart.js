@@ -57,21 +57,11 @@ async function canEditCart(cartId, userId){
     return canEditCart.user.id === userId;
 }
 
-async function destroyCart(id){
-    const {rows: [destroyedCart]} = await client.query(`
-    DELETE FROM cart
-    WHERE id = ${id}
-    RETURNING *;
-    `)
-
-    return destroyedCart;
-}
 
 module.exports = {
     getCart,
     getCartById,
     createCart,
     updateCart,
-    destroyCart,
     canEditCart
 }
