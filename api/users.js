@@ -43,7 +43,7 @@ router.post("/login", async (req, res, next) => {
 
 //REGISTER
 router.post("/register", async (req, res, next) => {
-  const { username, password, name, location } = req.body;
+  const { username, password, name, location, email } = req.body;
 
   try {
     const _user = await getUserByUserName(username);
@@ -63,6 +63,7 @@ router.post("/register", async (req, res, next) => {
         password,
         name,
         location,
+        email,
       });
 
       const token = jwt.sign(
@@ -105,16 +106,20 @@ router.patch("/:userId", requireUser, async (req, res, next) => {
   // console.log("hello")
   const { userId } = req.params;
   // console.log(req.params, "this is req.params")
-  const { username, password } = req.body;
+  const { name, password, email } = req.body;
   // console.log(req.body, "this is req.body")
   const updateUsers = {};
 
-  if (username) {
-    updateUsers.username = username;
+  if (name) {
+    updateUsers.name = name;
   }
   if (password) {
     updateUsers.password = password;
   }
+  if (email) {
+    updateUsers.email = email;
+  }
+
   try {
     
     const users = await getUserById(userId);
