@@ -7,9 +7,10 @@ const {
   getUserByUserName,
   createUser,
   getUserById,
-  updateUser
+  updateUser,
+  getAllUsers
 } = require("../db/users");
-const { requireUser } = require("./utils");
+const { requireUser, requireAdmin } = require("./utils");
 
 //LOGIN
 router.post("/login", async (req, res, next) => {
@@ -102,6 +103,15 @@ router.get("/me", requireUser, async (req, res, next) => {
   }
 });
 
+router.get("/", requireUser, requireAdmin, async (req, res, next) => {
+  try {
+  const allUsers = await getAllUsers();
+  res.send({allUsers})
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 //UPDATE USERS
 router.patch("/:userId", requireUser, async (req, res, next) => {
   // console.log("hello")
@@ -145,5 +155,8 @@ router.patch("/:userId", requireUser, async (req, res, next) => {
     next({ name, message });
   }
 });
+
+
+
 
 module.exports = router;

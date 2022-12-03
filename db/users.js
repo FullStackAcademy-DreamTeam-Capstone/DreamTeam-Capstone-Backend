@@ -2,7 +2,7 @@ const client = require("./client");
 
 async function getAllUsers(){
   const {rows} = await client.query(`
-    SELECT id, username, name, location
+    SELECT id, username, name, location, isadmin
     FROM users; 
   `)
 
