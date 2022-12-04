@@ -25,14 +25,14 @@ const { createCartItem, changeQuantityInCart, deleteCartItem } = require("./cart
 // testing createUser
 async function testCreateUser() {
   try {
-    console.log("user is being created");
+
     const andrew = await createUser({
       username: "andrewIsCool",
       password: "iLoveDogs",
       name: "andrew",
       location: "Georgia",
     });
-    console.log("finished creating the user");
+
   } catch (error) {
     console.error("Error creating a user");
   }
@@ -41,12 +41,12 @@ async function testCreateUser() {
 // testing createAddress
 async function testCreateAddress() {
   try {
-    console.log("address is being created")
+
     const minh = await createAddress({
         email: "minhNguyen@yahoo.com",
 
       });
-      console.log("finished creating the address")
+
       } catch (error) {
         console.error("Error creating a address")
       }
@@ -55,7 +55,7 @@ async function testCreateAddress() {
 
 async function dropTables() {
   try {
-    console.log("Dropping all tables...");
+
     await client.query(`
     DROP TABLE IF EXISTS cart_item;
     DROP TABLE IF EXISTS cart;
@@ -63,7 +63,7 @@ async function dropTables() {
     DROP TABLE IF EXISTS users;
     `);
 
-    console.log("Finished dropping all tables...");
+
   } catch (error) {
     console.error("Error dropping tables!");
     throw error;
@@ -72,7 +72,7 @@ async function dropTables() {
 
 async function createTables() {
   try {
-    console.log("Creating tables...");
+
     await client.query(`
     CREATE TABLE users (
       id SERIAL PRIMARY KEY,
@@ -114,7 +114,7 @@ async function createTables() {
     );
     `);
 
-    console.log("Finished creating tables...");
+
   } catch (error) {
     console.error("Error building tables!");
     throw error;
@@ -127,15 +127,15 @@ async function rebuildDB() {
     await dropTables();
     await createTables();
   } catch (error) {
-    console.log("Error during rebuildDB");
+
     throw error;
   }
 }
 
 async function testDB() {
-  // console.log("starting to test database");
 
-  console.log("testing createUser");
+
+
   const result = await createUser({
     username: "andrewIsCool",
     password: "iLoveDogs",
@@ -144,19 +144,17 @@ async function testDB() {
     email: "minhNguyen@yahoo.com",
   });
 
-  console.log("result:", result);
 
-  console.log("testing getAllUsers");
   const users = await getAllUsers();
 
-  console.log("Result:", users);
 
-  console.log("testing getUserById");
+
+
   const andrew = await getUserById(1);
 
-  console.log("Result:", andrew);
 
-  console.log("testing updateUser");
+
+
   const update = await updateUser(users[0].id, {
     username: "timothyIsCool",
     name: "timothy",
@@ -164,9 +162,9 @@ async function testDB() {
     email: "aandrew.myles@gmail.com",
     isadmin: true
   });
-  console.log("Result:", update);
 
-  console.log("testing create products");
+
+
   const productResult = await createProduct({
     name: "toy car",
     price: "99",
@@ -175,62 +173,55 @@ async function testDB() {
     name: "Bike",
     price: "30",
   });
-  console.log("productResult", productResults);
 
-  console.log("testing get all products");
+
+
   const products = await getAllProduct();
-  console.log("Result", products);
 
-  console.log("starting test on getProductById");
+
+
   const product1 = await getProductById(1);
-  console.log("getProductById result", product1);
 
-  // console.log("testing the update products");
-  // const updatingProduct = await updateProduct(products[0].id, {
-  //   name: "toy truck",
-  //   price: "$30"
-  // });
-  // console.log("updateProduct test", updatingProduct);
 
-  console.log("testing getProductByName");
+
   const productByName = await getProductByName("toy truck");
-  console.log("finished getProductByName", productByName)
 
-  console.log("testing createCart");
+
+
   const createdCart = await createCart(1);
-  console.log("created cart:", createdCart);
 
-  console.log("testing get cart")
+
+
   const getTheCart = await getCart();
-  console.log("finished testing getCart", getTheCart)
 
-  console.log("testing update cart")
+
+
   const updateTheCart = await updateCart(getTheCart[0].id, {
     user_id: "2"
   });
-  console.log("finished testing updateCart", updateTheCart)
 
-  console.log("testing getCartById")
+
+
   const getTheCartById = await getCartById(1);
-  console.log("finished testing getCartById", getTheCartById)
 
-  console.log("testing createCartItem")
+
+
   const createdCartItem = await createCartItem({
     "price": 1,
     "quantity": 3
   });
 
-  console.log("finished testing createCartItem", createdCartItem)
 
-  console.log("testing change quantity in cart");
+
+
   const changeTheQuantity = await changeQuantityInCart(1, 3);
-  console.log("finished changing quantity", changeTheQuantity);
 
-  console.log("testing delete item");
+
+
   const deletedCartItem = await deleteCartItem(1);
-  console.log("finished deleting cart item", deletedCartItem);
 
-  console.log("finished testing database");
+
+
 }
 
 rebuildDB()

@@ -1,5 +1,7 @@
 
 function requireUser(req, res, next) {
+
+
     if (!req.user) {
         res.status(401)
         next({
@@ -12,7 +14,7 @@ function requireUser(req, res, next) {
 }
 
 function requireAdmin(req, res, next) {
-console.log(req.user, "this is req.user")
+
 
     if (!req.user.isadmin) {
         res.status(401)

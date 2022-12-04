@@ -37,7 +37,7 @@ router.post("/login", async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.log(error);
+
     next(error);
   }
 });
@@ -92,7 +92,7 @@ router.post("/register", async (req, res, next) => {
 
 //ME
 router.get("/me", requireUser, async (req, res, next) => {
-  console.log("We made it")
+
   const username = req.user.username;
 
   try {
@@ -114,11 +114,11 @@ router.get("/", requireUser, requireAdmin, async (req, res, next) => {
 
 //UPDATE USERS
 router.patch("/:userId", requireUser, async (req, res, next) => {
-  // console.log("hello")
+
   const { userId } = req.params;
-  // console.log(req.params, "this is req.params")
+
   const { name, password, email, isadmin } = req.body;
-  // console.log(req.body, "this is req.body")
+
   const updateUsers = {};
 
   if (name) {
@@ -137,12 +137,12 @@ router.patch("/:userId", requireUser, async (req, res, next) => {
   try {
     
     const users = await getUserById(userId);
-    // console.log(users, "THIS is USERS")
+
     
     if (users.id == req.user.id) {
-      // console.log("made it to if state")
+
       const updatedUser = await updateUser(userId, updateUsers)
-      // console.log(updatedUser, "this is updateUser")
+
       res.send({ user: updatedUser})
     }
     else {

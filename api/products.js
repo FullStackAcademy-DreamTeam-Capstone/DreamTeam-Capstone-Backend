@@ -12,18 +12,18 @@ const {
 
 //MAKING SURE A REQUEST ID BEING MADE TO /products
 router.use((req, res, next) => {
-  console.log("we made it to the products api");
+
   next();
 });
 
 // CREATE PRODUCT
 router.post("/", requireUser, requireAdmin, async (req, res, next) => {
-  console.log("we are making it to router.post for create product");
+
   const { name, price, img_url } = req.body;
 
   try {
     const product = await createProduct({ name, price, img_url });
-    console.log(product, "this is product");
+
     if (product) {
       res.send({ product });
     } else {
@@ -32,7 +32,7 @@ router.post("/", requireUser, requireAdmin, async (req, res, next) => {
   } catch ({ name, message }) {
     next({ name, message });
   }
-  console.log("we finished creating the product");
+
 });
 
 // GET ALL PRODUCTS
@@ -84,18 +84,18 @@ router.patch("/:productId", requireUser, requireAdmin, async (req, res, next) =>
 // DELETE A PRODUCT
 // TOOK OUT requireUser, "ask for help"
 router.delete("/:productId", requireUser, requireAdmin, async (req, res, next) => {
-  console.log("made it to router.delete")
+
   const { productId } = req.params;
-  console.log(req.params, "this is req.params")
+
 
   try {
     const product = await getProductById(req.params.productId);
-    console.log(product, "this is the product")
-    if ( product.id == productId) {
-      console.log("we made it to the if")
+
+    if (productId) {
+
       const deleteProduct = await updateProduct(product.id, {active: false} );
-      console.log(deleteProduct, "this is the deleted product")
-      res.send({ product: deleteProduct });
+
+      res.send(deleteProduct);
     } else {
       next({
         name: "UnauthorizedUserError",
