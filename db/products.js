@@ -4,6 +4,7 @@ async function getAllProduct() {
   const { rows: products } = await client.query(`
     SELECT *
     FROM products
+    WHERE active = true
     `);
 
   return products;
@@ -67,26 +68,28 @@ async function createProduct({ name, price, img_url }) {
 }
 
 async function updateProduct(id, fields = {}) {
+
   const setString = Object.keys(fields)
   .map((elem, index) => `"${elem}"=$${index + 1}`)
   .join(", ");
-  console.log(fields, "this is obj.values", id)
-  ;
-  const reply = await client.query(
-    `
-    UPDATE products
-    SET ${setString}
-    WHERE id=${id}
-
-
-    `,
-    Object.values(fields)
-  ); const {
-    rows: [updatedProduct],
-  } = reply
-  console.log(reply, "this is reply")
-  return updatedProduct;
+  try {
+    const reply = await client.query(
+      `
+      UPDATE products
+      SET ${setString}
+      WHERE id=${id}
+  
+  
+      `,
+      Object.values(fields)
+    ); 
+    return {success: true};
+  } catch (error) {
+    return {success: false};
+  }
+ 
 }
+
 
 module.exports = {
   getAllProduct,

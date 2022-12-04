@@ -32,7 +32,7 @@ async function updateCart(id, fields = {}) {
     const setString = Object.keys(fields)
       .map((elem, index) => `"${elem}"=$${index + 1}`)
       .join(", ");
-    console.log(setString);
+
     const {
       rows: [updatedCart],
     } = await client.query(
