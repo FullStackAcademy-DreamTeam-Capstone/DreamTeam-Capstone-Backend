@@ -1,4 +1,6 @@
 const client = require("./client");
+const bcrypt = require('bcrypt');
+const SALT_COUNT = 10;
 
 async function getAllUsers(){
   const {rows} = await client.query(`
@@ -10,6 +12,9 @@ async function getAllUsers(){
 }
 
 async function createUser({ username, password, name, location, email, isadmin }) {
+  const hashedPassword = await bcrypt.hash(password, SALT_COUNT)
+  let userToAdd = {username, hashedPassword }
+
   try {
     const {
       rows: [user],
@@ -51,6 +56,13 @@ async function updateUser(id, fields = {}) {
 }
 
 async function getUser({ username, password }) {
+  const user = await getUserByUserName(username);
+  const hashedPassword = user.password;
+
+  let passwordsMatch = await bcrypt.compare(password, hashedPassword) 
+  if (passwordsMatch) {
+      return user
+  } 
   if (!username || !password) {
     return null;
   }
