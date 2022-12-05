@@ -121,7 +121,7 @@ router.get("/", requireUser, requireAdmin, async (req, res, next) => {
 })
 
 //UPDATE USERS
-router.patch("/:userId", requireUser, async (req, res, next) => {
+router.patch("/:userId", requireUser, requireAdmin, async (req, res, next) => {
 
   const { userId } = req.params;
 
@@ -145,9 +145,11 @@ router.patch("/:userId", requireUser, async (req, res, next) => {
   try {
     
     const users = await getUserById(userId);
+    console.log(users, "this is users in the back")
+
 
     
-    if (users.id == req.user.id) {
+    if (users.id == userId) {
 
       const updatedUser = await updateUser(userId, updateUsers)
 
