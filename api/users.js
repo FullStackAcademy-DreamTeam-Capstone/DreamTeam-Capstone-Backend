@@ -106,7 +106,7 @@ router.get("/me", requireUser, async (req, res, next) => {
 router.get("/", requireUser, requireAdmin, async (req, res, next) => {
   try {
   const allUsers = await getAllUsers();
-  res.send({allUsers})
+  res.send(allUsers)
   } catch (error) {
     console.error(error)
   }
