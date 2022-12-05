@@ -8,7 +8,8 @@ const {
   createUser,
   getUserById,
   updateUser,
-  getAllUsers
+  getAllUsers,
+  getUserByUserEmail
 } = require("../db/users");
 const { requireUser, requireAdmin } = require("./utils");
 
@@ -48,10 +49,17 @@ router.post("/register", async (req, res, next) => {
 
   try {
     const _user = await getUserByUserName(username);
+    const emailUser = await getUserByUserEmail(email);
     if (_user) {
       next({
         name: "UserExistsError",
         message: `User ${username} is already taken.`,
+      });
+    }
+    if (emailUser) {
+      next({
+        name: "UserEmailExist",
+        message: `User ${email} is already in Use`
       });
     } else if (password.length <= 6) {
       next({
