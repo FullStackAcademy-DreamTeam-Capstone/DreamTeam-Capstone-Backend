@@ -166,8 +166,9 @@ async function testDB() {
 
 
   const productResult = await createProduct({
-    name: "toy car",
+    name: "Watch",
     price: "99",
+    img_url: 'https://media.istockphoto.com/id/533714204/photo/businessman-checking-time-from-watch.jpg?s=612x612&w=0&k=20&c=bJN94WW68Rw8uEogp3GKtBYnhcrNFNnf1SkWb0KDvGo='
   });
   const productResults = await createProduct({
     name: "Bike",
