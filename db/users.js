@@ -25,7 +25,7 @@ async function createUser({ username, password, name, location, email, isadmin }
         ON CONFLICT (username, email) DO NOTHING
         RETURNING *;
       `,
-      [username, password, name, location, email, isadmin]
+      [username, hashedPassword, name, location, email, isadmin]
     );
 
     return user;
