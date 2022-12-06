@@ -173,8 +173,8 @@ async function testDB() {
   const productResults = await createProduct({
     name: "Bike",
     price: "30",
+    img_url: 'https://www.montaguebikes.com/wp-content/uploads/2015/11/BOSTON-DC-Open-Final.jpg'
   });
-
 
 
   const products = await getAllProduct();
