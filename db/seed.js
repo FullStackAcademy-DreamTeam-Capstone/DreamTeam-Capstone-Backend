@@ -166,35 +166,35 @@ async function testDB() {
 
 
   const productResult = await createProduct({
-    name: "Watch",
-    price: "99",
-    img_url: 'https://media.istockphoto.com/id/533714204/photo/businessman-checking-time-from-watch.jpg?s=612x612&w=0&k=20&c=bJN94WW68Rw8uEogp3GKtBYnhcrNFNnf1SkWb0KDvGo='
+    name: "Snowman",
+    price: "15",
+    img_url: 'https://pngimg.com/uploads/snowman/snowman_PNG9935.png'
   });
   const productResults = await createProduct({
-    name: "Bike",
-    price: "30",
-    img_url: 'https://www.bicycleretailer.com/sites/default/files/images/article/batch_lifestyle_bike_.jpg'
+    name: "Reindeer",
+    price: "50",
+    img_url: 'https://blog.murdochs.com/wp-content/uploads/2015/12/Reindeer_FB-1200x1200.jpg'
   });
   const productResult1 = await createProduct({
-    name: "Car",
-    price: "9,000",
-    img_url: 'https://www.hdnicewallpapers.com/Walls/Big/Bugatti/Blue_Bugatti_Car_HD_Image.jpg'
+    name: "Santa",
+    price: "100",
+    img_url: 'https://wildhunt.org/wp-content/uploads/2013/12/santa.jpg'
   });
 
   const productResult2 = await createProduct({
-    name: "PS5",
-    price: "499",
-    img_url: 'https://static2.gamerantimages.com/wordpress/wp-content/uploads/2020/10/ps5-3.jpg'
+    name: "Elf on a shelf",
+    price: "20",
+    img_url: 'https://www.uniqueideas.site/wp-content/uploads/top-50-elf-on-the-shelf-ideas-i-heart-nap-time-1.jpg'
   });
   const productResult3 = await createProduct({
-    name: "xbox",
-    price: "99",
-    img_url: 'https://assets.vg247.com/current/2020/12/SeriesS.jpg'
+    name: "Sled",
+    price: "30",
+    img_url: 'https://content.instructables.com/ORIG/FEY/J4LW/J0MOPNCU/FEYJ4LWJ0MOPNCU.jpg?frame=1&width=2100'
   });
   const productResult4 = await createProduct({
-    name: "Gatorade",
+    name: "Hot Chocolate",
     price: "3",
-    img_url: 'https://images.hdsupplysolutions.com/image/upload/d_no_image.gif,f_auto,fl_lossy,h_600,q_auto,w_600/101971_w_MainProductImage_Lg.jpg'
+    img_url: 'https://bennetto.co.nz/wp-content/uploads/2017/08/7082_Bennetto_Packshots_0175.jpg'
   });
 
 
