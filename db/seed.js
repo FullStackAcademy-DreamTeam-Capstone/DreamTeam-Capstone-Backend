@@ -173,6 +173,28 @@ async function testDB() {
   const productResults = await createProduct({
     name: "Bike",
     price: "30",
+    img_url: 'https://www.bicycleretailer.com/sites/default/files/images/article/batch_lifestyle_bike_.jpg'
+  });
+  const productResult1 = await createProduct({
+    name: "Car",
+    price: "9,000",
+    img_url: 'https://www.hdnicewallpapers.com/Walls/Big/Bugatti/Blue_Bugatti_Car_HD_Image.jpg'
+  });
+
+  const productResult2 = await createProduct({
+    name: "PS5",
+    price: "499",
+    img_url: 'https://static2.gamerantimages.com/wordpress/wp-content/uploads/2020/10/ps5-3.jpg'
+  });
+  const productResult3 = await createProduct({
+    name: "xbox",
+    price: "99",
+    img_url: 'https://assets.vg247.com/current/2020/12/SeriesS.jpg'
+  });
+  const productResult4 = await createProduct({
+    name: "Gatorade",
+    price: "3",
+    img_url: 'https://images.hdsupplysolutions.com/image/upload/d_no_image.gif,f_auto,fl_lossy,h_600,q_auto,w_600/101971_w_MainProductImage_Lg.jpg'
   });
 
 
